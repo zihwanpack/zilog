@@ -1,0 +1,10 @@
+{
+  "lsp": {
+    "typescript-language-server": {
+      "binary": {
+        "path": ".yarn/sdks/typescript/bin/tsserver",
+        "arguments": ["--stdio"],
+      },
+    },
+  },
+}
