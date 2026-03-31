@@ -4,7 +4,7 @@ import matter from "gray-matter";
 
 const postsDirectory = path.join(process.cwd(), "src/app/content/posts");
 
-export function getPostBySlug(slug: string) {
+export async function getPostBySlug(slug: string) {
   "use cache";
   const fullPath = path.join(postsDirectory, `${slug}.mdx`);
   if (!fs.existsSync(fullPath)) {
