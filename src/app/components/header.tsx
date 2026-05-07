@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
-import { ThemeToggle } from "./theme-toggle";
 import { useEffect, useRef, useState } from "react";
+
+import { ThemeToggle } from "./theme-toggle";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);

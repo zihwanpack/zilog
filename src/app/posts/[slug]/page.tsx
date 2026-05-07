@@ -1,17 +1,19 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
-import type { PluggableList } from "unified";
-import remarkGfm from "remark-gfm";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import { getPostBySlug } from "@/app/lib/post";
+import remarkGfm from "remark-gfm";
+
+import type { PluggableList } from "unified";
+
 import { Comments } from "@/app/components/comment";
+import { getPostBySlug } from "@/app/lib/post";
 
 export default async function PostPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
-}) {
+}): Promise<React.JSX.Element> {
   const { slug } = await params;
   const { frontmatter, content } = await getPostBySlug(slug);
 
