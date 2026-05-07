@@ -42,3 +42,6 @@ next-env.d.ts
 
 # lock
 yarn.lock
+
+# omc
+.omc
