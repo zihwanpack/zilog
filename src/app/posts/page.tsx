@@ -12,8 +12,13 @@ export default async function PostsPage(): Promise<React.JSX.Element> {
     <section>
       <h1>목록</h1>
       <ul>
-        {sortedPosts.map(({ metadata, slug }) => (
-          <PostCard {...metadata} slug={slug} key={slug} />
+        {sortedPosts.map(({ metadata, slug, readingTime }) => (
+          <PostCard
+            {...metadata}
+            slug={slug}
+            key={slug}
+            readingTime={readingTime}
+          />
         ))}
       </ul>
     </section>

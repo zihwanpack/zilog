@@ -8,12 +8,14 @@ export function PostCard({
   date,
   tags,
   description,
+  readingTime,
 }: {
   title: string;
   slug: string;
   date: string;
   tags: string[];
   description: string;
+  readingTime: number;
 }): React.JSX.Element {
   return (
     <li>
@@ -27,6 +29,7 @@ export function PostCard({
           </li>
         ))}
       </ul>
+      <time dateTime={`PT${readingTime}M`}>{readingTime}분 소요</time>
     </li>
   );
 }

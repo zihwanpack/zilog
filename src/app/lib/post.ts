@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import readingTime from "reading-time";
 
 import type { Post, PostMetadata, Tag } from "../types/models";
 
@@ -14,11 +15,13 @@ export async function getPostBySlug(slug: string): Promise<Post> {
   }
   const fileContents = fs.readFileSync(mdxPath, "utf8");
   const { data: metadata, content } = matter(fileContents);
+  const stats = readingTime(fileContents);
 
   return {
     slug,
     metadata: metadata as PostMetadata,
     content,
+    readingTime: Math.ceil(stats.minutes),
   };
 }
 
