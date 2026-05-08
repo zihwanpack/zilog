@@ -9,6 +9,20 @@ import type { PluggableList } from "unified";
 import { Comments } from "@/app/components/comment";
 import { getPostBySlug } from "@/app/lib/post";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const { frontmatter } = await getPostBySlug(slug);
+
+  return {
+    title: frontmatter.title,
+    description: frontmatter.description,
+  };
+}
+
 export default async function PostPage({
   params,
 }: {
