@@ -15,7 +15,7 @@ export default async function Home(): Promise<React.JSX.Element> {
         <ul>
           {posts.map((post) => (
             <li key={post.slug}>
-              <Link href={`/posts/${post.slug}`}>{post.frontmatter.title}</Link>
+              <Link href={`/posts/${post.slug}`}>{post.metadata.title}</Link>
             </li>
           ))}
         </ul>

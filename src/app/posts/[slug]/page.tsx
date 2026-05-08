@@ -15,11 +15,11 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const { frontmatter } = await getPostBySlug(slug);
+  const { metadata } = await getPostBySlug(slug);
 
   return {
-    title: frontmatter.title,
-    description: frontmatter.description,
+    title: metadata.title,
+    description: metadata.description,
   };
 }
 
@@ -29,7 +29,7 @@ export default async function PostPage({
   params: Promise<{ slug: string }>;
 }): Promise<React.JSX.Element> {
   const { slug } = await params;
-  const { frontmatter, content } = await getPostBySlug(slug);
+  const { metadata, content } = await getPostBySlug(slug);
 
   const options = {
     mdxOptions: {
@@ -44,7 +44,7 @@ export default async function PostPage({
 
   return (
     <article className="prose prose-slate dark:prose-invert max-w-none">
-      <h1>{frontmatter.title}</h1>
+      <h1>{metadata.title}</h1>
       <MDXRemote source={content} options={options} />
       <Comments />
     </article>

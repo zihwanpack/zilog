@@ -1,12 +1,14 @@
-export type PostFrontmatter = {
+export type Tag = string;
+
+export type PostMetadata = {
   title: string;
   date: string;
   description: string;
-  tags: string[];
+  tags: Tag[];
 };
 
 export type Post = {
   slug: string;
-  frontmatter: PostFrontmatter;
+  metadata: PostMetadata;
   content: string;
 };

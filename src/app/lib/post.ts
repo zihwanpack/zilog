@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 
-import type { Post, PostFrontmatter } from "../types/models";
+import type { Post, PostMetadata, Tag } from "../types/models";
 
 const postsDirectory = path.join(process.cwd(), "src/app/content/posts");
 
@@ -13,11 +13,11 @@ export async function getPostBySlug(slug: string): Promise<Post> {
     throw new Error(`포스트를 찾을 수 없습니다: ${slug}`);
   }
   const fileContents = fs.readFileSync(mdxPath, "utf8");
-  const { data: frontmatter, content } = matter(fileContents);
+  const { data: metadata, content } = matter(fileContents);
 
   return {
     slug,
-    frontmatter: frontmatter as PostFrontmatter,
+    metadata: metadata as PostMetadata,
     content,
   };
 }
@@ -35,12 +35,17 @@ export async function getPosts(): Promise<Post[]> {
 export async function getRecentsPosts(limit: number): Promise<Post[]> {
   const posts = await getPosts();
   return posts
-    .sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date))
+    .sort((a, b) => b.metadata.date.localeCompare(a.metadata.date))
     .slice(0, limit);
 }
 
-// tag 타입 구체화 필요
-export async function getPostsByTag(tag: string): Promise<Post[]> {
+export async function getAllTags(): Promise<Tag[]> {
   const posts = await getPosts();
-  return posts.filter((post) => post.frontmatter.tags?.includes(tag));
+  const tags = posts.flatMap((post) => post.metadata.tags ?? []);
+  return [...new Set(tags)];
+}
+
+export async function getPostsByTag(tag: Tag): Promise<Post[]> {
+  const posts = await getPosts();
+  return posts.filter((post) => post.metadata.tags?.includes(tag));
 }

@@ -5,17 +5,15 @@ export default async function PostsPage(): Promise<React.JSX.Element> {
   const posts = await getPosts();
 
   const sortedPosts = posts.sort((a, b) =>
-    b.frontmatter.date.localeCompare(a.frontmatter.date),
+    b.metadata.date.localeCompare(a.metadata.date),
   );
 
   return (
     <section>
       <h1>목록</h1>
       <ul>
-        {sortedPosts.map(({ frontmatter, slug }) => (
-          <li key={slug}>
-            <PostCard {...frontmatter} slug={slug} />
-          </li>
+        {sortedPosts.map(({ metadata, slug }) => (
+          <PostCard {...metadata} slug={slug} key={slug} />
         ))}
       </ul>
     </section>
