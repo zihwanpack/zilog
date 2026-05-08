@@ -22,7 +22,9 @@ export function PostCard({
       <time dateTime={date}>{formatDate(date)}</time>
       <ul>
         {tags.map((tag) => (
-          <li key={tag}>{tag}</li>
+          <li key={tag}>
+            <Link href={`/posts/tag/${tag}`}>{tag}</Link>
+          </li>
         ))}
       </ul>
     </li>
