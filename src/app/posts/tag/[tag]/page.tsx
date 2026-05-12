@@ -12,7 +12,7 @@ export default async function TagPage({
   const posts = await getPostsByTag(tag);
 
   return (
-    <div>
+    <div className="mx-auto max-w-2xl px-8 py-16">
       <h1>{tag}</h1>
       <ul>
         {posts.map((post) => (

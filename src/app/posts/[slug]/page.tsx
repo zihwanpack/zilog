@@ -43,7 +43,7 @@ export default async function PostPage({
   } satisfies Parameters<typeof MDXRemote>[0]["options"];
 
   return (
-    <article className="prose prose-slate dark:prose-invert max-w-none">
+    <article className="prose dark:prose-invert mx-auto max-w-2xl px-8 py-16">
       <h1>{metadata.title}</h1>
       <MDXRemote source={content} options={options} />
       <Comments />

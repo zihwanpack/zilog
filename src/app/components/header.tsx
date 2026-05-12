@@ -34,34 +34,28 @@ export function Header() {
       <header
         className={`sticky top-0 z-50 w-full transition-all duration-300 ${
           isScrolled
-            ? "border-b border-zinc-200 bg-white/70 backdrop-blur-md dark:border-zinc-800 dark:bg-black/70"
+            ? "border-b border-[var(--color-border)] bg-[var(--color-background)]/70 backdrop-blur-md"
             : "border-b border-transparent bg-transparent"
         }`}
       >
-        <nav className="mx-auto flex max-w-5xl items-center justify-between p-4">
-          <Link href="/" className="text-xl font-bold">
+        <nav className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
+          <Link
+            href="/"
+            className="text-2xl font-bold tracking-tight text-[var(--color-accent)]"
+          >
             zilog
           </Link>
 
-          <ul className="flex items-center gap-6 text-sm font-medium">
+          <ul className="flex items-center gap-8 text-sm font-medium">
             <li>
               <Link
                 href="/posts"
-                className="hover:text-blue-500 transition-colors"
+                className="underline-offset-4 hover:underline hover:text-[var(--color-accent)] transition-colors"
               >
                 Posts
               </Link>
             </li>
-            <li>
-              <Link
-                href="/about"
-                className="hover:text-blue-500 transition-colors"
-              >
-                About
-              </Link>
-            </li>
-            <li className="flex items-center">
-              {/* ThemeToggle 컴포넌트는 별도로 구현되어 있다고 가정 */}
+<li>
               <ThemeToggle />
             </li>
           </ul>
