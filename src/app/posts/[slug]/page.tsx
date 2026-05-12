@@ -7,7 +7,12 @@ import remarkGfm from "remark-gfm";
 import type { PluggableList } from "unified";
 
 import { Comments } from "@/app/components/comment";
-import { getPostBySlug } from "@/app/lib/post";
+import { getPosts, getPostBySlug } from "@/app/lib/post";
+
+export async function generateStaticParams() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ slug: post.slug }));
+}
 
 export async function generateMetadata({
   params,
@@ -43,7 +48,7 @@ export default async function PostPage({
   } satisfies Parameters<typeof MDXRemote>[0]["options"];
 
   return (
-    <article className="prose dark:prose-invert mx-auto max-w-2xl px-8 py-16">
+    <article className="prose dark:prose-invert max-w-none py-16">
       <h1>{metadata.title}</h1>
       <MDXRemote source={content} options={options} />
       <Comments />

@@ -8,7 +8,7 @@ export default async function PostsPage({
   searchParams: Promise<{ page?: string }>;
 }): Promise<React.JSX.Element> {
   return (
-    <section className="mx-auto max-w-2xl px-8 py-16">
+    <section className="py-16">
       <h1 className="text-xs font-semibold tracking-widest uppercase text-[var(--color-muted)] mb-8">
         Posts
       </h1>

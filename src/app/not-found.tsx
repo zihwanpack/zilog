@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NotFound(): React.JSX.Element {
   return (
-    <main className="mx-auto max-w-2xl px-8 py-32">
+    <main className="py-32">
       <h1 className="text-8xl font-bold tracking-tight text-[var(--color-accent)] leading-none">
         404
       </h1>

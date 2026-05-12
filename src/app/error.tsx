@@ -14,7 +14,7 @@ export default function GlobalError({
   }, [error]);
 
   return (
-    <main className="mx-auto max-w-2xl px-8 py-32">
+    <main className="py-32">
       <h1 className="text-8xl font-bold tracking-tight text-[var(--color-accent)] leading-none">
         오류
       </h1>

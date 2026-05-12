@@ -40,14 +40,16 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="ko"
       className={`${jetbrainsMono.variable} ${pretendard.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute={"class"}>
           <Header />
-          {children}
+          <div className="mx-auto max-w-2xl w-full px-8">
+            {children}
+          </div>
         </ThemeProvider>
       </body>
     </html>
