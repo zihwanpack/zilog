@@ -3,7 +3,7 @@ import path from "node:path";
 import matter from "gray-matter";
 import readingTime from "reading-time";
 
-import type { Post, PostMetadata, Tag } from "../types/models";
+import type { PaginatedPosts, Post, PostMetadata, Tag } from "../types/models";
 
 const postsDirectory = path.join(process.cwd(), "src/app/content/posts");
 
@@ -51,4 +51,24 @@ export async function getAllTags(): Promise<Tag[]> {
 export async function getPostsByTag(tag: Tag): Promise<Post[]> {
   const posts = await getPosts();
   return posts.filter((post) => post.metadata.tags?.includes(tag));
+}
+
+export async function getPostsPaginated(
+  page: number,
+  limit = 10,
+): Promise<PaginatedPosts> {
+  const posts = await getPosts();
+  const sorted = posts.sort((a, b) =>
+    b.metadata.date.localeCompare(a.metadata.date),
+  );
+  const postCount = sorted.length;
+  const pageCount = Math.ceil(postCount / limit);
+  const postsOnPage = sorted.slice((page - 1) * limit, page * limit);
+
+  return {
+    posts: postsOnPage,
+    postCount,
+    pageCount,
+    page,
+  };
 }

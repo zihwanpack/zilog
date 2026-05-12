@@ -1,26 +1,20 @@
-import { PostCard } from "../components/post-card";
-import { getPosts } from "../lib/post";
+import { Suspense } from "react";
 
-export default async function PostsPage(): Promise<React.JSX.Element> {
-  const posts = await getPosts();
+import PostList from "../components/post-list";
 
-  const sortedPosts = posts.sort((a, b) =>
-    b.metadata.date.localeCompare(a.metadata.date),
-  );
-
+export default async function PostsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}): Promise<React.JSX.Element> {
   return (
-    <section>
-      <h1>목록</h1>
-      <ul>
-        {sortedPosts.map(({ metadata, slug, readingTime }) => (
-          <PostCard
-            {...metadata}
-            slug={slug}
-            key={slug}
-            readingTime={readingTime}
-          />
-        ))}
-      </ul>
+    <section className="mx-auto max-w-2xl px-8 py-16">
+      <h1 className="text-xs font-semibold tracking-widest uppercase text-[var(--color-muted)] mb-8">
+        Posts
+      </h1>
+      <Suspense fallback={<p>로딩 중...</p>}>
+        <PostList searchParams={searchParams} />
+      </Suspense>
     </section>
   );
 }
