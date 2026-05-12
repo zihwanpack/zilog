@@ -14,10 +14,10 @@ export function Comments() {
   return (
     <div>
       <Giscus
-        repo="zihwanpack/zilog"
-        repoId="R_kgDORpIJSg"
-        category="General"
-        categoryId="DIC_kwDORpIJSs4C8aYK"
+        repo={process.env.NEXT_PUBLIC_GISCUS_REPO as `${string}/${string}`}
+        repoId={process.env.NEXT_PUBLIC_GISCUS_REPO_ID!}
+        category={process.env.NEXT_PUBLIC_GISCUS_CATEGORY!}
+        categoryId={process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID!}
         mapping="pathname"
         strict="0"
         reactionsEnabled="1"

@@ -7,9 +7,13 @@ import readingTime from "reading-time";
 import type { PaginatedPosts, Post, PostMetadata, Tag } from "../types/models";
 
 const postsDirectory = path.join(process.cwd(), "src/app/content/posts");
+const SLUG_REGEX = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 export async function getPostBySlug(slug: string): Promise<Post> {
   "use cache";
+  if (!SLUG_REGEX.test(slug)) {
+    throw new Error(`유효하지 않은 슬러그: ${slug}`);
+  }
   const mdxPath = path.join(postsDirectory, `${slug}.mdx`);
   if (!fs.existsSync(mdxPath)) {
     throw new Error(`포스트를 찾을 수 없습니다: ${slug}`);

@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+
 import { getPostsPaginated } from "../lib/post";
 import { Pagination } from "./pagination";
 import { PostCard } from "./post-card";
@@ -8,8 +10,10 @@ export default async function PostList({
   searchParams: Promise<{ page?: string }>;
 }) {
   const { page } = await searchParams;
-  const currentPage = Number(page ?? 1);
+  const currentPage = Math.max(1, parseInt(page ?? "1", 10) || 1);
   const { posts, pageCount } = await getPostsPaginated(currentPage);
+
+  if (pageCount > 0 && currentPage > pageCount) notFound();
 
   return (
     <>
