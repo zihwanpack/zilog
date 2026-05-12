@@ -60,6 +60,17 @@ export async function getPostsByTag(tag: Tag): Promise<Post[]> {
   return posts.filter((post) => post.metadata.tags?.includes(tag));
 }
 
+export async function getAdjacentPosts(
+  slug: string,
+): Promise<{ prev: Post | null; next: Post | null }> {
+  const posts = await getPosts();
+  const index = posts.findIndex((p) => p.slug === slug);
+  return {
+    prev: index > 0 ? posts[index - 1] : null,
+    next: index < posts.length - 1 ? posts[index + 1] : null,
+  };
+}
+
 export async function getPostsPaginated(
   page: number,
   limit = 10,

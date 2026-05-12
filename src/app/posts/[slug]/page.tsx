@@ -7,7 +7,10 @@ import remarkGfm from "remark-gfm";
 import type { PluggableList } from "unified";
 
 import { Comments } from "@/app/components/comment";
-import { getPosts, getPostBySlug } from "@/app/lib/post";
+import { PostNav } from "@/app/components/post-nav";
+import { Toc } from "@/app/components/toc";
+import { getAdjacentPosts, getPosts, getPostBySlug } from "@/app/lib/post";
+import { extractHeadings } from "@/app/lib/toc";
 
 export async function generateStaticParams() {
   const posts = await getPosts();
@@ -34,7 +37,11 @@ export default async function PostPage({
   params: Promise<{ slug: string }>;
 }): Promise<React.JSX.Element> {
   const { slug } = await params;
-  const { metadata, content } = await getPostBySlug(slug);
+  const [{ metadata, content }, { prev, next }] = await Promise.all([
+    getPostBySlug(slug),
+    getAdjacentPosts(slug),
+  ]);
+  const headings = extractHeadings(content);
 
   const options = {
     mdxOptions: {
@@ -50,8 +57,10 @@ export default async function PostPage({
   return (
     <article className="prose dark:prose-invert max-w-none py-16">
       <h1>{metadata.title}</h1>
+      <Toc headings={headings} />
       <MDXRemote source={content} options={options} />
       <Comments />
+      <PostNav prev={prev} next={next} />
     </article>
   );
 }
