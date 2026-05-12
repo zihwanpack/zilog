@@ -1,7 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import type { Post, PostMetadata } from "../types/models";
 import { formatDate } from "../utils/date";
+
+type PostCardProps = PostMetadata & Pick<Post, "slug" | "readingTime">;
 
 export function PostCard({
   title,
@@ -11,15 +14,7 @@ export function PostCard({
   description,
   readingTime,
   cover,
-}: {
-  title: string;
-  slug: string;
-  date: string;
-  tags: string[];
-  description: string;
-  readingTime: number;
-  cover?: string;
-}): React.JSX.Element {
+}: PostCardProps): React.JSX.Element {
   return (
     <li className="border border-[var(--color-border)] group">
       <Link href={`/posts/${slug}`}>

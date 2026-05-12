@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { compareDesc } from "date-fns";
 import matter from "gray-matter";
 import readingTime from "reading-time";
 
@@ -15,7 +16,7 @@ export async function getPostBySlug(slug: string): Promise<Post> {
   }
   const fileContents = fs.readFileSync(mdxPath, "utf8");
   const { data: metadata, content } = matter(fileContents);
-  const stats = readingTime(fileContents);
+  const stats = readingTime(content);
 
   return {
     slug,
@@ -26,20 +27,22 @@ export async function getPostBySlug(slug: string): Promise<Post> {
 }
 
 export async function getPosts(): Promise<Post[]> {
+  "use cache";
   const files = fs.readdirSync(postsDirectory);
-  return Promise.all(
+  const posts = await Promise.all(
     files.map((file) => {
       const slug = file.replace(/\.mdx$/, "");
       return getPostBySlug(slug);
     }),
   );
+  return posts.sort((a, b) =>
+    compareDesc(new Date(a.metadata.date), new Date(b.metadata.date)),
+  );
 }
 
 export async function getRecentsPosts(limit: number): Promise<Post[]> {
   const posts = await getPosts();
-  return posts
-    .sort((a, b) => b.metadata.date.localeCompare(a.metadata.date))
-    .slice(0, limit);
+  return posts.slice(0, limit);
 }
 
 export async function getAllTags(): Promise<Tag[]> {
@@ -58,12 +61,9 @@ export async function getPostsPaginated(
   limit = 10,
 ): Promise<PaginatedPosts> {
   const posts = await getPosts();
-  const sorted = posts.sort((a, b) =>
-    b.metadata.date.localeCompare(a.metadata.date),
-  );
-  const postCount = sorted.length;
+  const postCount = posts.length;
   const pageCount = Math.ceil(postCount / limit);
-  const postsOnPage = sorted.slice((page - 1) * limit, page * limit);
+  const postsOnPage = posts.slice((page - 1) * limit, page * limit);
 
   return {
     posts: postsOnPage,
