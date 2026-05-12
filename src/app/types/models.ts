@@ -5,6 +5,7 @@ export type PostMetadata = {
   date: string;
   description: string;
   tags: Tag[];
+  cover?: string;
 };
 
 export type Post = {
@@ -12,4 +13,11 @@ export type Post = {
   metadata: PostMetadata;
   content: string;
   readingTime: number;
+};
+
+export type PaginatedPosts = {
+  posts: Post[];
+  postCount: number;
+  pageCount: number;
+  page: number;
 };
