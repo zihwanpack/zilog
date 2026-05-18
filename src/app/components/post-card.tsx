@@ -16,9 +16,9 @@ export function PostCard({
   cover,
 }: PostCardProps): React.JSX.Element {
   return (
-    <li className="border border-[var(--color-border)] group">
+    <li className="border border-border group">
       <Link href={`/posts/${slug}`}>
-        <div className="aspect-video w-full overflow-hidden bg-[var(--color-border)]">
+        <div className="aspect-video w-full overflow-hidden bg-border">
           {cover ? (
             <Image
               src={cover}
@@ -32,13 +32,13 @@ export function PostCard({
           )}
         </div>
         <div className="p-4">
-          <h2 className="font-bold tracking-tight group-hover:text-[var(--color-accent)] transition-colors">
+          <h2 className="font-bold tracking-tight group-hover:text-accent transition-colors">
             {title}
           </h2>
-          <p className="mt-1 text-sm text-[var(--color-muted)] line-clamp-2">
+          <p className="mt-1 text-sm text-muted line-clamp-2">
             {description}
           </p>
-          <div className="mt-3 flex items-center gap-3 text-xs text-[var(--color-muted)]">
+          <div className="mt-3 flex items-center gap-3 text-xs text-muted">
             <time dateTime={date}>{formatDate(date)}</time>
             <span>·</span>
             <span>{readingTime}분 읽기</span>

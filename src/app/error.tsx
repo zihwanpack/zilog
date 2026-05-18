@@ -17,19 +17,19 @@ export default function GlobalError({
 
   return (
     <main className="py-32">
-      <h1 className="text-8xl font-bold tracking-tight text-[var(--color-accent)] leading-none">
+      <h1 className="text-8xl font-bold tracking-tight text-accent leading-none">
         오류
       </h1>
-      <p className="mt-6 text-xl text-[var(--color-foreground)]">
+      <p className="mt-6 text-xl text-foreground">
         문제가 발생했습니다
       </p>
-      <p className="mt-2 text-sm text-[var(--color-muted)]">
+      <p className="mt-2 text-sm text-muted">
         잠시 후 다시 시도해주세요.
       </p>
       <button
         type="button"
         onClick={reset}
-        className="mt-12 inline-block text-sm text-[var(--color-accent)] hover:underline underline-offset-4"
+        className="mt-12 inline-block text-sm text-accent hover:underline underline-offset-4"
       >
         다시 시도하기 →
       </button>

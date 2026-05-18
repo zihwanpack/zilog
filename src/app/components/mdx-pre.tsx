@@ -20,7 +20,7 @@ export function MdxPre(props: React.ComponentPropsWithoutRef<"pre">) {
       <button
         type="button"
         onClick={copy}
-        className="absolute top-3 right-3 p-1.5 opacity-0 group-hover/pre:opacity-100 transition-opacity text-[var(--color-muted)] hover:text-[var(--color-foreground)]"
+        className="absolute top-3 right-3 p-1.5 opacity-0 group-hover/pre:opacity-100 transition-opacity text-muted hover:text-foreground"
         aria-label="코드 복사"
       >
         {copied ? <Check size={14} /> : <Copy size={14} />}

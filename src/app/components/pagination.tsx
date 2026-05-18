@@ -18,13 +18,13 @@ export function Pagination({
   return (
     <nav className="mt-12 flex items-center justify-center gap-6 text-sm">
       {isFirst ? (
-        <span className="text-[var(--color-border)] cursor-not-allowed">
+        <span className="text-border cursor-not-allowed">
           ← 이전
         </span>
       ) : (
         <Link
           href={`?page=${currentPage - 1}`}
-          className="text-[var(--color-muted)] hover:text-[var(--color-foreground)] transition-colors"
+          className="text-muted hover:text-foreground transition-colors"
         >
           ← 이전
         </Link>
@@ -34,13 +34,13 @@ export function Pagination({
         {pages.map((page) => (
           <li key={page}>
             {page === currentPage ? (
-              <span className="font-bold text-[var(--color-accent)]">
+              <span className="font-bold text-accent">
                 {page}
               </span>
             ) : (
               <Link
                 href={`?page=${page}`}
-                className="text-[var(--color-muted)] hover:text-[var(--color-foreground)] transition-colors"
+                className="text-muted hover:text-foreground transition-colors"
               >
                 {page}
               </Link>
@@ -50,13 +50,13 @@ export function Pagination({
       </ul>
 
       {isLast ? (
-        <span className="text-[var(--color-border)] cursor-not-allowed">
+        <span className="text-border cursor-not-allowed">
           다음 →
         </span>
       ) : (
         <Link
           href={`?page=${currentPage + 1}`}
-          className="text-[var(--color-muted)] hover:text-[var(--color-foreground)] transition-colors"
+          className="text-muted hover:text-foreground transition-colors"
         >
           다음 →
         </Link>

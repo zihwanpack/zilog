@@ -32,14 +32,14 @@ export function Header() {
       <header
         className={`sticky top-0 z-50 w-full transition-all duration-300 ${
           isScrolled
-            ? "border-b border-[var(--color-border)] bg-[var(--color-background)]/70 backdrop-blur-md"
+            ? "border-b border-border bg-background/70 backdrop-blur-md"
             : "border-b border-transparent bg-transparent"
         }`}
       >
         <nav className="mx-auto flex max-w-3xl items-center justify-between px-6 py-4">
           <Link
             href="/"
-            className="text-2xl font-bold tracking-tight text-[var(--color-accent)]"
+            className="text-2xl font-bold tracking-tight text-accent"
           >
             zilog
           </Link>
@@ -48,7 +48,7 @@ export function Header() {
             <li>
               <Link
                 href="/posts"
-                className="underline-offset-4 hover:underline hover:text-[var(--color-accent)] transition-colors"
+                className="underline-offset-4 hover:underline hover:text-accent transition-colors"
               >
                 Posts
               </Link>

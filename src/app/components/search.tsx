@@ -20,7 +20,7 @@ export function Search({ posts }: { posts: Post[] }) {
 
   return (
     <section className="mt-12">
-      <h2 className="text-xs font-semibold tracking-widest uppercase text-[var(--color-muted)] mb-6">
+      <h2 className="text-xs font-semibold tracking-widest uppercase text-muted mb-6">
         검색
       </h2>
       <input
@@ -28,25 +28,25 @@ export function Search({ posts }: { posts: Post[] }) {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="포스트 검색..."
-        className="w-full bg-transparent border-b border-[var(--color-border)] pb-2 text-sm text-[var(--color-foreground)] placeholder:text-[var(--color-muted)] focus:outline-none focus:border-[var(--color-accent)] transition-colors"
+        className="w-full bg-transparent border-b border-border pb-2 text-sm text-foreground placeholder:text-muted focus:outline-none focus:border-accent transition-colors"
       />
       {query.trim() && (
         <ul className="mt-6">
           {results.length === 0 ? (
-            <p className="text-sm text-[var(--color-muted)]">검색 결과가 없습니다.</p>
+            <p className="text-sm text-muted">검색 결과가 없습니다.</p>
           ) : (
             results.map((post) => (
               <li
                 key={post.slug}
-                className="border-b border-[var(--color-border)] py-4"
+                className="border-b border-border py-4"
               >
                 <Link
                   href={`/posts/${post.slug}`}
-                  className="font-medium hover:text-[var(--color-accent)] transition-colors"
+                  className="font-medium hover:text-accent transition-colors"
                 >
                   {post.metadata.title}
                 </Link>
-                <span className="ml-3 text-sm text-[var(--color-muted)]">
+                <span className="ml-3 text-sm text-muted">
                   {post.metadata.date}
                 </span>
               </li>

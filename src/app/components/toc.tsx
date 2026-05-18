@@ -4,8 +4,8 @@ export function Toc({ headings }: { headings: Heading[] }): React.JSX.Element | 
   if (headings.length === 0) return null;
 
   return (
-    <nav className="mb-10 p-4 border border-[var(--color-border)] text-sm">
-      <p className="text-xs font-semibold tracking-widest uppercase text-[var(--color-muted)] mb-3">
+    <nav className="mb-10 p-4 border border-border text-sm">
+      <p className="text-xs font-semibold tracking-widest uppercase text-muted mb-3">
         목차
       </p>
       <ul className="space-y-1.5">
@@ -13,7 +13,7 @@ export function Toc({ headings }: { headings: Heading[] }): React.JSX.Element | 
           <li key={h.id} style={{ paddingLeft: `${(h.depth - 1) * 12}px` }}>
             <a
               href={`#${h.id}`}
-              className="text-[var(--color-muted)] hover:text-[var(--color-foreground)] transition-colors"
+              className="text-muted hover:text-foreground transition-colors"
             >
               {h.text}
             </a>
