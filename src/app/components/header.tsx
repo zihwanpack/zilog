@@ -2,8 +2,6 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-import { ThemeToggle } from "./theme-toggle";
-
 export function Header() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const scrollSentinelRef = useRef<HTMLDivElement | null>(null);
@@ -26,9 +24,9 @@ export function Header() {
       }
     };
   }, []);
+
   return (
     <>
-      {/* 감지용 빈 div */}
       <div ref={scrollSentinelRef} className="absolute top-0 h-1 w-full" />
 
       <header
@@ -54,9 +52,6 @@ export function Header() {
               >
                 Posts
               </Link>
-            </li>
-<li>
-              <ThemeToggle />
             </li>
           </ul>
         </nav>

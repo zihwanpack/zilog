@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-import { ThemeProvider } from "next-themes";
 import { Header } from "./components/header";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -26,7 +25,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: "zilog",
     description: "코드와 생각의 조각들을 문서화합니다.",
-    // url: "https://여러분의-블로그-주소.com",
     siteName: "zilog",
     locale: "ko_KR",
     type: "website",
@@ -42,15 +40,12 @@ export default function RootLayout({
     <html
       lang="ko"
       className={`${jetbrainsMono.variable} ${pretendard.variable} h-full antialiased`}
-      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <ThemeProvider attribute={"class"}>
-          <Header />
-          <div className="mx-auto max-w-2xl w-full px-8">
-            {children}
-          </div>
-        </ThemeProvider>
+        <Header />
+        <div className="mx-auto max-w-2xl w-full px-8">
+          {children}
+        </div>
       </body>
     </html>
   );

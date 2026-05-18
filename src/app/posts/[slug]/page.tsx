@@ -14,8 +14,6 @@ import { Toc } from "@/app/components/toc";
 import { getAdjacentPosts, getPosts, getPostBySlug } from "@/app/lib/post";
 import { extractHeadings } from "@/app/lib/toc";
 
-export const dynamic = "force-static";
-
 export async function generateStaticParams() {
   const posts = await getPosts();
   return posts.map((post) => ({ slug: post.slug }));
@@ -61,7 +59,7 @@ export default async function PostPage({
   return (
     <>
       <ReadingProgress />
-      <article className="prose dark:prose-invert max-w-none py-16">
+      <article className="prose max-w-none py-16">
         <h1>{metadata.title}</h1>
         <Toc headings={headings} />
         <MDXRemote source={content} options={options} components={{ pre: MdxPre }} />

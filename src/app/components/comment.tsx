@@ -1,10 +1,8 @@
 "use client";
 import Giscus from "@giscus/react";
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
 export function Comments() {
-  const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState<boolean>(false);
 
   useEffect(() => setMounted(true), []);
@@ -23,11 +21,7 @@ export function Comments() {
         reactionsEnabled="1"
         emitMetadata="0"
         inputPosition="top"
-        theme={
-          resolvedTheme === "dark"
-            ? "dark_high_contrast"
-            : "light_high_contrast"
-        }
+        theme="light_high_contrast"
         lang="ko"
       />
     </div>

@@ -19,14 +19,6 @@
     --color-muted: #7A7060;
   }
 
-  .dark {
-    --color-background: #0F0F0F;
-    --color-foreground: #EBEBEB;
-    --color-accent: #C0392B;
-    --color-border: #2A2A2A;
-    --color-muted: #6B7280;
-  }
-
     body {
         font-family:
             var(--font-jetbrains-mono), var(--font-pretendard), sans-serif;
@@ -39,22 +31,5 @@
     code {
         font-family: var(--font-jetbrains-mono), monospace;
         font-variant-ligatures: normal;
-    }
-
-    .dark .prose {
-        --tw-prose-invert-body: var(--color-foreground);
-        --tw-prose-invert-headings: var(--color-foreground);
-        --tw-prose-invert-lead: var(--color-muted);
-        --tw-prose-invert-links: var(--color-accent);
-        --tw-prose-invert-bold: var(--color-foreground);
-        --tw-prose-invert-counters: var(--color-muted);
-        --tw-prose-invert-bullets: var(--color-muted);
-        --tw-prose-invert-hr: var(--color-border);
-        --tw-prose-invert-quotes: var(--color-foreground);
-        --tw-prose-invert-quote-borders: var(--color-border);
-        --tw-prose-invert-captions: var(--color-muted);
-        --tw-prose-invert-code: var(--color-foreground);
-        --tw-prose-invert-th-borders: var(--color-border);
-        --tw-prose-invert-td-borders: var(--color-border);
     }
 }
