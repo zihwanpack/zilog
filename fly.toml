@@ -1,0 +1,22 @@
+app = "zilog"
+primary_region = "nrt"
+
+[build]
+  [build.args]
+    NEXT_PUBLIC_SITE_URL = "https://zilog.fly.dev"
+    NEXT_PUBLIC_GISCUS_REPO = "zihwanpack/zilog"
+    NEXT_PUBLIC_GISCUS_REPO_ID = "R_kgDORpIJSg"
+    NEXT_PUBLIC_GISCUS_CATEGORY = "General"
+    NEXT_PUBLIC_GISCUS_CATEGORY_ID = "DIC_kwDORpIJSs4C8aYK"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+
+[[vm]]
+  memory = "256mb"
+  cpu_kind = "shared"
+  cpus = 1
