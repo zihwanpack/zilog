@@ -45,3 +45,5 @@ yarn.lock
 
 # omc
 .omc
+public/robots.txt
+public/sitemap*.xml
