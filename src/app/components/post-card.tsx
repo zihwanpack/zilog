@@ -16,7 +16,7 @@ export function PostCard({
   cover,
 }: PostCardProps): React.JSX.Element {
   return (
-    <li className="border border-border group">
+    <div className="border border-border group">
       <Link href={`/posts/${slug}`}>
         <div className="aspect-video w-full overflow-hidden bg-border">
           {cover ? (
@@ -45,6 +45,6 @@ export function PostCard({
           </div>
         </div>
       </Link>
-    </li>
+    </div>
   );
 }

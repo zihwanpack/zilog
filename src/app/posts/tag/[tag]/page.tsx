@@ -1,12 +1,15 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
+
 import { getAllTags, getPostsByTag } from "@/app/lib/post";
 import type { Tag } from "@/app/types/models";
+
+const TAG_REGEX = /^[\p{L}\p{N}\-_.]+$/u;
 
 export async function generateStaticParams() {
   const tags = await getAllTags();
   return tags.map((tag) => ({ tag }));
 }
-
-import Link from "next/link";
 
 export default async function TagPage({
   params,
@@ -14,7 +17,12 @@ export default async function TagPage({
   params: Promise<{ tag: Tag }>;
 }) {
   const { tag } = await params;
+
+  if (!TAG_REGEX.test(tag)) notFound();
+
   const posts = await getPostsByTag(tag);
+
+  if (posts.length === 0) notFound();
 
   return (
     <div className="py-16">

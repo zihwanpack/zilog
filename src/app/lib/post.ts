@@ -1,13 +1,22 @@
-import fs from "node:fs";
+import { access, readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { compareDesc } from "date-fns";
 import matter from "gray-matter";
 import readingTime from "reading-time";
+import { z } from "zod";
 
-import type { PaginatedPosts, Post, PostMetadata, Tag } from "../types/models";
+import type { PaginatedPosts, Post, Tag } from "../types/models";
 
 const postsDirectory = path.join(process.cwd(), "src/app/content/posts");
 const SLUG_REGEX = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+const postMetadataSchema = z.object({
+  title: z.string(),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "날짜는 YYYY-MM-DD 형식이어야 합니다"),
+  description: z.string(),
+  tags: z.array(z.string()).default([]),
+  cover: z.string().optional(),
+});
 
 export async function getPostBySlug(slug: string): Promise<Post> {
   "use cache";
@@ -15,16 +24,19 @@ export async function getPostBySlug(slug: string): Promise<Post> {
     throw new Error(`유효하지 않은 슬러그: ${slug}`);
   }
   const mdxPath = path.join(postsDirectory, `${slug}.mdx`);
-  if (!fs.existsSync(mdxPath)) {
+  try {
+    await access(mdxPath);
+  } catch {
     throw new Error(`포스트를 찾을 수 없습니다: ${slug}`);
   }
-  const fileContents = fs.readFileSync(mdxPath, "utf8");
-  const { data: metadata, content } = matter(fileContents);
+  const fileContents = await readFile(mdxPath, "utf8");
+  const { data, content } = matter(fileContents);
+  const metadata = postMetadataSchema.parse(data);
   const stats = readingTime(content);
 
   return {
     slug,
-    metadata: metadata as PostMetadata,
+    metadata,
     content,
     readingTime: Math.ceil(stats.minutes),
   };
@@ -32,12 +44,11 @@ export async function getPostBySlug(slug: string): Promise<Post> {
 
 export async function getPosts(): Promise<Post[]> {
   "use cache";
-  const files = fs.readdirSync(postsDirectory);
+  const files = await readdir(postsDirectory);
   const posts = await Promise.all(
-    files.map((file) => {
-      const slug = file.replace(/\.mdx$/, "");
-      return getPostBySlug(slug);
-    }),
+    files
+      .filter((file) => file.endsWith(".mdx"))
+      .map((file) => getPostBySlug(file.replace(/\.mdx$/, ""))),
   );
   return posts.sort((a, b) =>
     compareDesc(new Date(a.metadata.date), new Date(b.metadata.date)),
@@ -51,13 +62,16 @@ export async function getRecentsPosts(limit: number): Promise<Post[]> {
 
 export async function getAllTags(): Promise<Tag[]> {
   const posts = await getPosts();
-  const tags = posts.flatMap((post) => post.metadata.tags ?? []);
+  const tags = posts.flatMap((post) => post.metadata.tags);
   return [...new Set(tags)];
 }
 
 export async function getPostsByTag(tag: Tag): Promise<Post[]> {
   const posts = await getPosts();
-  return posts.filter((post) => post.metadata.tags?.includes(tag));
+  const normalizedTag = tag.toLowerCase();
+  return posts.filter((post) =>
+    post.metadata.tags.some((t) => t.toLowerCase() === normalizedTag),
+  );
 }
 
 export async function getAdjacentPosts(

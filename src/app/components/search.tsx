@@ -1,7 +1,7 @@
 "use client";
 import Fuse from "fuse.js";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useDeferredValue, useMemo, useState } from "react";
 import type { Post } from "../types/models";
 
 const fuseOptions = {
@@ -11,11 +11,12 @@ const fuseOptions = {
 
 export function Search({ posts }: { posts: Post[] }) {
   const [query, setQuery] = useState("");
+  const deferredQuery = useDeferredValue(query);
 
   const fuse = useMemo(() => new Fuse(posts, fuseOptions), [posts]);
 
-  const results = query.trim()
-    ? fuse.search(query).map((r) => r.item)
+  const results = deferredQuery.trim()
+    ? fuse.search(deferredQuery).map((r) => r.item)
     : [];
 
   return (
@@ -28,18 +29,16 @@ export function Search({ posts }: { posts: Post[] }) {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="포스트 검색..."
+        aria-label="포스트 검색"
         className="w-full bg-transparent border-b border-border pb-2 text-sm text-foreground placeholder:text-muted focus:outline-none focus:border-accent transition-colors"
       />
-      {query.trim() && (
+      {deferredQuery.trim() && (
         <ul className="mt-6">
           {results.length === 0 ? (
             <p className="text-sm text-muted">검색 결과가 없습니다.</p>
           ) : (
             results.map((post) => (
-              <li
-                key={post.slug}
-                className="border-b border-border py-4"
-              >
+              <li key={post.slug} className="border-b border-border py-4">
                 <Link
                   href={`/posts/${post.slug}`}
                   className="font-medium hover:text-accent transition-colors"
