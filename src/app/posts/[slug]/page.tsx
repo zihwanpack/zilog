@@ -7,7 +7,9 @@ import remarkGfm from "remark-gfm";
 import type { PluggableList } from "unified";
 
 import { Comments } from "@/app/components/comment";
+import { MdxPre } from "@/app/components/mdx-pre";
 import { PostNav } from "@/app/components/post-nav";
+import { ReadingProgress } from "@/app/components/reading-progress";
 import { Toc } from "@/app/components/toc";
 import { getAdjacentPosts, getPosts, getPostBySlug } from "@/app/lib/post";
 import { extractHeadings } from "@/app/lib/toc";
@@ -55,12 +57,15 @@ export default async function PostPage({
   } satisfies Parameters<typeof MDXRemote>[0]["options"];
 
   return (
-    <article className="prose dark:prose-invert max-w-none py-16">
-      <h1>{metadata.title}</h1>
-      <Toc headings={headings} />
-      <MDXRemote source={content} options={options} />
-      <Comments />
-      <PostNav prev={prev} next={next} />
-    </article>
+    <>
+      <ReadingProgress />
+      <article className="prose dark:prose-invert max-w-none py-16">
+        <h1>{metadata.title}</h1>
+        <Toc headings={headings} />
+        <MDXRemote source={content} options={options} components={{ pre: MdxPre }} />
+        <Comments />
+        <PostNav prev={prev} next={next} />
+      </article>
+    </>
   );
 }
