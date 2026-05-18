@@ -14,6 +14,8 @@ import { Toc } from "@/app/components/toc";
 import { getAdjacentPosts, getPosts, getPostBySlug } from "@/app/lib/post";
 import { extractHeadings } from "@/app/lib/toc";
 
+export const dynamic = "force-static";
+
 export async function generateStaticParams() {
   const posts = await getPosts();
   return posts.map((post) => ({ slug: post.slug }));
