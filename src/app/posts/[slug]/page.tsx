@@ -1,13 +1,5 @@
-import { MDXRemote } from "next-mdx-remote/rsc";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypePrettyCode from "rehype-pretty-code";
-import rehypeSlug from "rehype-slug";
-import remarkGfm from "remark-gfm";
-
-import type { PluggableList } from "unified";
-
 import { Comments } from "@/app/components/comment";
-import { MdxPre } from "@/app/components/mdx-pre";
+import { MdxContent } from "@/app/components/mdx-content";
 import { PostNav } from "@/app/components/post-nav";
 import { ReadingProgress } from "@/app/components/reading-progress";
 import { Toc } from "@/app/components/toc";
@@ -45,24 +37,13 @@ export default async function PostPage({
   ]);
   const headings = extractHeadings(content);
 
-  const options = {
-    mdxOptions: {
-      remarkPlugins: [remarkGfm] satisfies PluggableList,
-      rehypePlugins: [
-        rehypeSlug,
-        [rehypePrettyCode, { theme: "github-dark" }],
-        [rehypeAutolinkHeadings, { behavior: "wrap" }],
-      ] satisfies PluggableList,
-    },
-  } satisfies Parameters<typeof MDXRemote>[0]["options"];
-
   return (
     <>
       <ReadingProgress />
       <article className="prose max-w-none py-16">
         <h1>{metadata.title}</h1>
         <Toc headings={headings} />
-        <MDXRemote source={content} options={options} components={{ pre: MdxPre }} />
+        <MdxContent content={content} />
         <Comments />
         <PostNav prev={prev} next={next} />
       </article>
