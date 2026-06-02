@@ -12,7 +12,9 @@ const SLUG_REGEX = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 const postMetadataSchema = z.object({
   title: z.string(),
-  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "날짜는 YYYY-MM-DD 형식이어야 합니다"),
+  date: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "날짜는 YYYY-MM-DD 형식이어야 합니다"),
   description: z.string(),
   tags: z.array(z.string()).default([]),
   cover: z.string().optional(),

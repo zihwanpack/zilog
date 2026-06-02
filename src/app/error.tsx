@@ -20,12 +20,8 @@ export default function GlobalError({
       <h1 className="text-8xl font-bold tracking-tight text-accent leading-none">
         오류
       </h1>
-      <p className="mt-6 text-xl text-foreground">
-        문제가 발생했습니다
-      </p>
-      <p className="mt-2 text-sm text-muted">
-        잠시 후 다시 시도해주세요.
-      </p>
+      <p className="mt-6 text-xl text-foreground">문제가 발생했습니다</p>
+      <p className="mt-2 text-sm text-muted">잠시 후 다시 시도해주세요.</p>
       <button
         type="button"
         onClick={reset}

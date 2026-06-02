@@ -1,6 +1,10 @@
 import type { Heading } from "../lib/toc";
 
-export function Toc({ headings }: { headings: Heading[] }): React.JSX.Element | null {
+export function Toc({
+  headings,
+}: {
+  headings: Heading[];
+}): React.JSX.Element | null {
   if (headings.length === 0) return null;
 
   return (

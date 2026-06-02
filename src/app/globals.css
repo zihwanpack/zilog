@@ -3,33 +3,32 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-    --color-background: #F5F0E8;
-    --color-foreground: #1A1A1A;
-    --color-accent: #8B1A1A;
-    --color-border: #D4C9B8;
-    --color-muted: #7A7060;
+  --color-background: #f5f0e8;
+  --color-foreground: #1a1a1a;
+  --color-accent: #8b1a1a;
+  --color-border: #d4c9b8;
+  --color-muted: #7a7060;
 }
 
 @layer base {
   :root {
-    --color-background: #F5F0E8;
-    --color-foreground: #1A1A1A;
-    --color-accent: #8B1A1A;
-    --color-border: #D4C9B8;
-    --color-muted: #7A7060;
+    --color-background: #f5f0e8;
+    --color-foreground: #1a1a1a;
+    --color-accent: #8b1a1a;
+    --color-border: #d4c9b8;
+    --color-muted: #7a7060;
   }
 
-    body {
-        font-family:
-            var(--font-jetbrains-mono), var(--font-pretendard), sans-serif;
-        font-variant-ligatures: normal;
-        background-color: var(--color-background);
-        color: var(--color-foreground);
-    }
+  body {
+    font-family: var(--font-jetbrains-mono), var(--font-pretendard), sans-serif;
+    font-variant-ligatures: normal;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
 
-    pre,
-    code {
-        font-family: var(--font-jetbrains-mono), monospace;
-        font-variant-ligatures: normal;
-    }
+  pre,
+  code {
+    font-family: var(--font-jetbrains-mono), monospace;
+    font-variant-ligatures: normal;
+  }
 }
