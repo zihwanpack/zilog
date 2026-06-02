@@ -16,6 +16,8 @@ const pretendard = localFont({
   weight: "45 920",
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://zilog.dev";
+
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: {
@@ -29,6 +31,16 @@ export const metadata: Metadata = {
     siteName: "zilog",
     locale: "ko_KR",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "zilog",
+    description: "코드와 생각의 조각들을 문서화합니다.",
+  },
+  alternates: {
+    types: {
+      "application/rss+xml": `${SITE_URL}/feed.xml`,
+    },
   },
 };
 

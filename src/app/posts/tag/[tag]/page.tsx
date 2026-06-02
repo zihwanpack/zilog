@@ -11,6 +11,18 @@ export async function generateStaticParams() {
   return tags.map((tag) => ({ tag }));
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ tag: Tag }>;
+}) {
+  const { tag } = await params;
+  return {
+    title: `#${tag}`,
+    description: `${tag} 태그가 달린 포스트 목록`,
+  };
+}
+
 export default async function TagPage({
   params,
 }: {
