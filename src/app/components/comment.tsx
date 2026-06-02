@@ -14,7 +14,12 @@ export function Comments() {
 
   if (!mounted) return null;
 
-  if (!GISCUS_REPO || !GISCUS_REPO_ID || !GISCUS_CATEGORY || !GISCUS_CATEGORY_ID) {
+  if (
+    !GISCUS_REPO ||
+    !GISCUS_REPO_ID ||
+    !GISCUS_CATEGORY ||
+    !GISCUS_CATEGORY_ID
+  ) {
     return null;
   }
 

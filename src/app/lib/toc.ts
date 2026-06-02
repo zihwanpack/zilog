@@ -4,9 +4,9 @@ export function extractHeadings(content: string): Heading[] {
   const regex = /^(#{1,6})\s+(.+)$/gm;
   const headings: Heading[] = [];
   const idCounts = new Map<string, number>();
-  let match;
+  let match = regex.exec(content);
 
-  while ((match = regex.exec(content)) !== null) {
+  while (match !== null) {
     const depth = match[1].length;
     const text = match[2].trim();
     const baseId =
@@ -20,6 +20,7 @@ export function extractHeadings(content: string): Heading[] {
     idCounts.set(baseId, count + 1);
 
     headings.push({ depth, text, id });
+    match = regex.exec(content);
   }
   return headings;
 }

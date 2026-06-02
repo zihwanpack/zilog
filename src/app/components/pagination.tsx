@@ -6,9 +6,9 @@ export function Pagination({
 }: {
   currentPage: number;
   pageCount: number;
-}): React.JSX.Element {
+}): React.JSX.Element | null {
   if (pageCount <= 1) {
-    return <></>;
+    return null;
   }
 
   const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
@@ -18,9 +18,7 @@ export function Pagination({
   return (
     <nav className="mt-12 flex items-center justify-center gap-6 text-sm">
       {isFirst ? (
-        <span className="text-border cursor-not-allowed">
-          ← 이전
-        </span>
+        <span className="text-border cursor-not-allowed">← 이전</span>
       ) : (
         <Link
           href={`?page=${currentPage - 1}`}
@@ -34,9 +32,7 @@ export function Pagination({
         {pages.map((page) => (
           <li key={page}>
             {page === currentPage ? (
-              <span className="font-bold text-accent">
-                {page}
-              </span>
+              <span className="font-bold text-accent">{page}</span>
             ) : (
               <Link
                 href={`?page=${page}`}
@@ -50,9 +46,7 @@ export function Pagination({
       </ul>
 
       {isLast ? (
-        <span className="text-border cursor-not-allowed">
-          다음 →
-        </span>
+        <span className="text-border cursor-not-allowed">다음 →</span>
       ) : (
         <Link
           href={`?page=${currentPage + 1}`}

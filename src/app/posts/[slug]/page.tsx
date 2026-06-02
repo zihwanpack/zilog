@@ -1,10 +1,10 @@
-import { JsonLd } from "@/app/components/json-ld";
 import { Comments } from "@/app/components/comment";
+import { JsonLd } from "@/app/components/json-ld";
 import { MdxContent } from "@/app/components/mdx-content";
 import { PostNav } from "@/app/components/post-nav";
 import { ReadingProgress } from "@/app/components/reading-progress";
 import { Toc } from "@/app/components/toc";
-import { getAdjacentPosts, getPosts, getPostBySlug } from "@/app/lib/post";
+import { getAdjacentPosts, getPostBySlug, getPosts } from "@/app/lib/post";
 import { extractHeadings } from "@/app/lib/toc";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://zilog.dev";
