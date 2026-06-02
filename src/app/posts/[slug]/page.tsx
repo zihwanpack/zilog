@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { Comments } from "@/app/components/comment";
 import { JsonLd } from "@/app/components/json-ld";
 import { MdxContent } from "@/app/components/mdx-content";
@@ -6,6 +8,7 @@ import { ReadingProgress } from "@/app/components/reading-progress";
 import { Toc } from "@/app/components/toc";
 import { getAdjacentPosts, getPostBySlug, getPosts } from "@/app/lib/post";
 import { extractHeadings } from "@/app/lib/toc";
+import { formatDate } from "@/app/utils/date";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://zilog.dev";
 
@@ -52,7 +55,7 @@ export default async function PostPage({
   params: Promise<{ slug: string }>;
 }): Promise<React.JSX.Element> {
   const { slug } = await params;
-  const [{ metadata, content }, { prev, next }] = await Promise.all([
+  const [{ metadata, content, readingTime }, { prev, next }] = await Promise.all([
     getPostBySlug(slug),
     getAdjacentPosts(slug),
   ]);
@@ -80,6 +83,23 @@ export default async function PostPage({
       <ReadingProgress />
       <article className="prose max-w-none py-16">
         <h1>{metadata.title}</h1>
+        <div className="not-prose flex items-center gap-3 text-xs text-muted mt-2 mb-8">
+          <time dateTime={metadata.date}>{formatDate(metadata.date)}</time>
+          <span>·</span>
+          <span>{readingTime}분 읽기</span>
+        </div>
+        {metadata.cover && (
+          <div className="not-prose aspect-video w-full overflow-hidden mb-8">
+            <Image
+              src={metadata.cover}
+              alt={metadata.title}
+              width={800}
+              height={450}
+              className="w-full h-full object-cover"
+              priority
+            />
+          </div>
+        )}
         <Toc headings={headings} />
         <MdxContent content={content} />
         <Comments />

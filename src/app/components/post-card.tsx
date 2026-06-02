@@ -35,7 +35,7 @@ export function PostCard({
             {title}
           </h2>
           <p className="mt-1 text-sm text-muted line-clamp-2">{description}</p>
-          <div className="mt-3 flex items-center gap-3 text-xs text-muted">
+          <div className="mt-3 flex items-center gap-3 text-xs text-muted whitespace-nowrap">
             <time dateTime={date}>{formatDate(date)}</time>
             <span>·</span>
             <span>{readingTime}분 읽기</span>
