@@ -15,6 +15,8 @@ export type Post = {
   readingTime: number;
 };
 
+export type SearchablePost = Omit<Post, "content">;
+
 export type PaginatedPosts = {
   posts: Post[];
   postCount: number;

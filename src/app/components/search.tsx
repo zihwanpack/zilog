@@ -2,14 +2,14 @@
 import Fuse from "fuse.js";
 import Link from "next/link";
 import { useDeferredValue, useMemo, useState } from "react";
-import type { Post } from "../types/models";
+import type { SearchablePost } from "../types/models";
 
 const fuseOptions = {
   keys: ["metadata.title", "metadata.description", "metadata.tags"],
   threshold: 0.4,
 };
 
-export function Search({ posts }: { posts: Post[] }) {
+export function Search({ posts }: { posts: SearchablePost[] }) {
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query);
 

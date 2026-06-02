@@ -6,9 +6,14 @@ import { getPosts } from "./lib/post";
 export default async function Home(): Promise<React.JSX.Element> {
   const allPosts = await getPosts();
   const recentPosts = allPosts.slice(0, 5);
+  const searchablePosts = allPosts.map(({ slug, metadata, readingTime }) => ({
+    slug,
+    metadata,
+    readingTime,
+  }));
   return (
     <main className="py-16">
-      <Search posts={allPosts} />
+      <Search posts={searchablePosts} />
       <section className="mt-12">
         <h2 className="text-xs font-semibold tracking-widest uppercase text-muted mb-6">
           최근 포스트

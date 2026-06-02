@@ -43,7 +43,10 @@ export async function GET(): Promise<Response> {
 </rss>`;
 
     return new Response(rss, {
-      headers: { "Content-Type": "application/xml; charset=utf-8" },
+      headers: {
+        "Content-Type": "application/xml; charset=utf-8",
+        "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
+      },
     });
   } catch {
     return new Response("RSS 피드 생성 중 오류가 발생했습니다.", {
