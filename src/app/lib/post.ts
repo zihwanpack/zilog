@@ -21,7 +21,6 @@ const postMetadataSchema = z.object({
 });
 
 export async function getPostBySlug(slug: string): Promise<Post> {
-  "use cache";
   if (!SLUG_REGEX.test(slug)) {
     throw new Error(`유효하지 않은 슬러그: ${slug}`);
   }
@@ -45,7 +44,6 @@ export async function getPostBySlug(slug: string): Promise<Post> {
 }
 
 export async function getPosts(): Promise<Post[]> {
-  "use cache";
   const files = await readdir(postsDirectory);
   const posts = await Promise.all(
     files
