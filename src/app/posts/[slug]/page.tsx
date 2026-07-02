@@ -55,10 +55,8 @@ export default async function PostPage({
   params: Promise<{ slug: string }>;
 }): Promise<React.JSX.Element> {
   const { slug } = await params;
-  const [{ metadata, content, readingTime }, { prev, next }] = await Promise.all([
-    getPostBySlug(slug),
-    getAdjacentPosts(slug),
-  ]);
+  const [{ metadata, content, readingTime }, { prev, next }] =
+    await Promise.all([getPostBySlug(slug), getAdjacentPosts(slug)]);
   const headings = extractHeadings(content);
   const url = `${SITE_URL}/posts/${slug}`;
 

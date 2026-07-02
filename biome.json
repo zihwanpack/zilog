@@ -9,6 +9,12 @@
     "ignoreUnknown": true,
     "includes": ["**", "!node_modules", "!.next", "!dist", "!build", "!.zed"]
   },
+  "json": {
+    "parser": {
+      "allowComments": true,
+      "allowTrailingCommas": true
+    }
+  },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
