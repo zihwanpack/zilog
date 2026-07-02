@@ -13,6 +13,7 @@ export function PostCard({
   description,
   readingTime,
   cover,
+  tags,
 }: PostCardProps): React.JSX.Element {
   return (
     <div className="border border-border group">
@@ -40,6 +41,18 @@ export function PostCard({
             <span>·</span>
             <span>{readingTime}분 읽기</span>
           </div>
+          {tags.length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-xs text-accent border border-accent/30 px-2 py-0.5"
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </Link>
     </div>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import { Comments } from "@/app/components/comment";
 import { JsonLd } from "@/app/components/json-ld";
@@ -81,11 +82,26 @@ export default async function PostPage({
       <ReadingProgress />
       <article className="prose max-w-none py-16">
         <h1>{metadata.title}</h1>
-        <div className="not-prose flex items-center gap-3 text-xs text-muted mt-2 mb-8">
+        <div
+          className={`not-prose flex items-center gap-3 text-xs text-muted mt-2 ${metadata.tags.length > 0 ? "" : "mb-8"}`}
+        >
           <time dateTime={metadata.date}>{formatDate(metadata.date)}</time>
           <span>·</span>
           <span>{readingTime}분 읽기</span>
         </div>
+        {metadata.tags.length > 0 && (
+          <div className="not-prose flex flex-wrap gap-2 mt-3 mb-8">
+            {metadata.tags.map((tag) => (
+              <Link
+                key={tag}
+                href={`/posts/tag/${tag}`}
+                className="text-xs text-accent border border-accent/30 px-2 py-0.5 hover:bg-accent/10 transition-colors"
+              >
+                #{tag}
+              </Link>
+            ))}
+          </div>
+        )}
         {metadata.cover && (
           <div className="not-prose aspect-video w-full overflow-hidden mb-8">
             <Image

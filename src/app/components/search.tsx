@@ -33,15 +33,18 @@ export function Search({ posts }: { posts: SearchablePost[] }) {
         className="w-full bg-transparent border-b border-border pb-2 text-sm text-foreground placeholder:text-muted focus:outline-none focus:border-accent transition-colors"
       />
       {deferredQuery.trim() && (
-        <ul className="mt-6">
+        <ul className="mt-6 flex flex-col gap-2">
           {results.length === 0 ? (
             <p className="text-sm text-muted">검색 결과가 없습니다.</p>
           ) : (
             results.map((post) => (
-              <li key={post.slug} className="border-b border-border py-4">
+              <li
+                key={post.slug}
+                className="bg-accent/5 border border-accent/20 px-4 py-3"
+              >
                 <Link
                   href={`/posts/${post.slug}`}
-                  className="font-medium hover:text-accent transition-colors"
+                  className="font-medium text-foreground hover:underline underline-offset-2"
                 >
                   {post.metadata.title}
                 </Link>
