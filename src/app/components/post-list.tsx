@@ -4,16 +4,10 @@ import { getPostsPaginated } from "../lib/post";
 import { Pagination } from "./pagination";
 import { PostCard } from "./post-card";
 
-export default async function PostList({
-  searchParams,
-}: {
-  searchParams: Promise<{ page?: string }>;
-}) {
-  const { page } = await searchParams;
-  const currentPage = Math.max(1, parseInt(page ?? "1", 10) || 1);
-  const { posts, pageCount } = await getPostsPaginated(currentPage);
+export default async function PostList({ page }: { page: number }) {
+  const { posts, pageCount } = await getPostsPaginated(page);
 
-  if (pageCount > 0 && currentPage > pageCount) notFound();
+  if (pageCount > 0 && page > pageCount) notFound();
 
   if (posts.length === 0) {
     return (
@@ -30,7 +24,7 @@ export default async function PostList({
           </li>
         ))}
       </ul>
-      <Pagination currentPage={currentPage} pageCount={pageCount} />
+      <Pagination currentPage={page} pageCount={pageCount} />
     </>
   );
 }

@@ -36,5 +36,3 @@ next-env.d.ts
 
 # omc
 .omc
-public/robots.txt
-public/sitemap*.xml
