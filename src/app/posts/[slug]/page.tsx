@@ -1,34 +1,124 @@
-  import { MDXRemote } from "next-mdx-remote/rsc";
-  import type { PluggableList } from "unified";
-  import remarkGfm from "remark-gfm";
-  import rehypePrettyCode from "rehype-pretty-code";
-  import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import { getPostBySlug } from "@/app/lib/post";
+import Image from "next/image";
+import Link from "next/link";
 
-export default async function PostPage({
+import { Comments } from "@/app/components/comment";
+import { JsonLd } from "@/app/components/json-ld";
+import { MdxContent } from "@/app/components/mdx-content";
+import { PostNav } from "@/app/components/post-nav";
+import { ReadingProgress } from "@/app/components/reading-progress";
+import { Toc } from "@/app/components/toc";
+import { getAdjacentPosts, getPostBySlug, getPosts } from "@/app/lib/post";
+import { extractHeadings } from "@/app/lib/toc";
+import { formatDate } from "@/app/utils/date";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://zilog.dev";
+
+export async function generateStaticParams() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ slug: post.slug }));
+}
+
+export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-    const { data, content } = getPostBySlug(slug);
-  
-    const options = {
-      mdxOptions: {
-        remarkPlugins: [remarkGfm] satisfies PluggableList,
-        rehypePlugins: [
-          rehypeSlug,
-          [rehypePrettyCode, { theme: "github-dark" }],
-          [rehypeAutolinkHeadings, { behavior: "wrap" }],
-        ] satisfies PluggableList,
-      },
-    } satisfies Parameters<typeof MDXRemote>[0]["options"];
-  
-    return (
-      <article className="prose prose-slate dark:prose-invert max-w-none">
-        <h1>{data.title}</h1>
-        <MDXRemote source={content} options={options} />
+  const { metadata } = await getPostBySlug(slug);
+  const url = `${SITE_URL}/posts/${slug}`;
+  const ogImage = `${url}/opengraph-image`;
+
+  return {
+    title: metadata.title,
+    description: metadata.description,
+    alternates: { canonical: url },
+    openGraph: {
+      title: metadata.title,
+      description: metadata.description,
+      type: "article",
+      url,
+      publishedTime: metadata.date,
+      tags: metadata.tags,
+      images: [{ url: ogImage, width: 1200, height: 630, alt: metadata.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: metadata.title,
+      description: metadata.description,
+      images: [{ url: ogImage, alt: metadata.title }],
+    },
+  };
+}
+
+export default async function PostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<React.JSX.Element> {
+  const { slug } = await params;
+  const [{ metadata, content, readingTime }, { prev, next }] =
+    await Promise.all([getPostBySlug(slug), getAdjacentPosts(slug)]);
+  const headings = extractHeadings(content);
+  const url = `${SITE_URL}/posts/${slug}`;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: metadata.title,
+    description: metadata.description,
+    datePublished: metadata.date,
+    url,
+    publisher: {
+      "@type": "Organization",
+      name: "zilog",
+      url: SITE_URL,
+    },
+    ...(metadata.tags.length > 0 && { keywords: metadata.tags.join(", ") }),
+  };
+
+  return (
+    <>
+      <JsonLd data={jsonLd} />
+      <ReadingProgress />
+      <article className="prose max-w-none py-16">
+        <h1>{metadata.title}</h1>
+        <div
+          className={`not-prose flex items-center gap-3 text-xs text-muted mt-2 ${metadata.tags.length > 0 ? "" : "mb-8"}`}
+        >
+          <time dateTime={metadata.date}>{formatDate(metadata.date)}</time>
+          <span>·</span>
+          <span>{readingTime}분 읽기</span>
+        </div>
+        {metadata.tags.length > 0 && (
+          <div className="not-prose flex flex-wrap gap-2 mt-3 mb-8">
+            {metadata.tags.map((tag) => (
+              <Link
+                key={tag}
+                href={`/posts/tag/${tag}`}
+                className="text-xs text-accent border border-accent/30 px-2 py-0.5 hover:bg-accent/10 transition-colors"
+              >
+                #{tag}
+              </Link>
+            ))}
+          </div>
+        )}
+        {metadata.cover && (
+          <div className="not-prose aspect-video w-full overflow-hidden mb-8">
+            <Image
+              src={metadata.cover}
+              alt={metadata.title}
+              width={800}
+              height={450}
+              className="w-full h-full object-cover"
+              priority
+            />
+          </div>
+        )}
+        <Toc headings={headings} />
+        <MdxContent content={content} />
+        <Comments />
+        <PostNav prev={prev} next={next} />
       </article>
-    );
-  }
+    </>
+  );
+}
